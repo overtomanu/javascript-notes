@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JS adding and removing event listeners</title>
+</head>
+
+<body>
+    <button id="demo">Start</button>
+</body>
+<script>
+    window.onload = function() {
+        var btn = document.getElementById("demo");
+        btn.addEventListener("mouseover", myFunction);
+
+        function myFunction() {
+            alert(Math.random());
+            btn.removeEventListener("mouseover", myFunction);
+        }
+    };
+</script>
+</html>

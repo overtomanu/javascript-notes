@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JS remove html element after 2 seconds</title>
+	</head>
+	<body>
+		<div id="demo">
+            <p id="p1">This is a paragraph.</p>
+            <p id="p2">This is another paragraph.</p>
+        </div>
+	</body>
+    <script>
+        //calling the function in window.onload to make sure the HTML is loaded
+        window.onload = function() {
+            setTimeout(()=>{
+                var parent = document.getElementById("demo");
+                var child = document.getElementById("p1");
+                parent.removeChild(child);
+            },2000)
+        };
+    </script>
+</html>

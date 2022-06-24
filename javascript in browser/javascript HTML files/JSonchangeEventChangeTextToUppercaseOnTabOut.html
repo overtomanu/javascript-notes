@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JS onchange event - change text to uppercase on tab out</title>
+	</head>
+	<body>
+		<input type="text" id="name" onchange="change()">
+	</body>
+    <script>
+        function change() {
+            var x = document.getElementById('name');
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+</html>

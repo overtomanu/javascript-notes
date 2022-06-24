@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JS replace html element</title>
+	</head>
+	<body>
+		<div id="demo">
+            <p id="p1">This is a paragraph.</p>
+            <p id="p2">This is another paragraph.</p>
+        </div>
+	</body>
+    <script>
+        //calling the function in window.onload to make sure the HTML is loaded
+        window.onload = function() {
+            setTimeout(()=>{
+                var p = document.createElement("p");
+                var node = document.createTextNode("======>>>>>>> This is new <<<<<<<======");
+                p.appendChild(node);
+
+                var parent = document.getElementById("demo");
+                var child = document.getElementById("p1");
+                parent.replaceChild(p, child);
+            },2000);
+        };
+    </script>
+</html>

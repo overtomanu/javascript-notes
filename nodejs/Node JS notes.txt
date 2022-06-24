@@ -1,0 +1,90 @@
+Webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser. 
+By packing multiple js modules into single file, we reduce the no of network requests, which 
+in turn reduces the page load time.
+
+installing webpack:
+npm install --save-dev webpack webpack-cli
+
+webpack looks for webpack.config.js in root project directory for its configuration.
+
+//sample minimal webpack.config.js
+const path = require('path');
+const CleanPlugin = require('clean-webpack-plugin');
+
+module.exports = {
+  // can set mode to "production" as well
+  // when mode is development, script files are served from memory
+  mode: 'development',
+  entry: './src/app.js',
+  output: {
+    // can set to filename: '[contenthash].js', to have 
+    // unique file names for each build for production
+    filename: 'app.js',
+    path: path.resolve(__dirname, 'assets', 'scripts'),
+    //need to specify below path to correctly load dynamically loaded module pack js file
+    publicPath: 'assets/scripts/'
+  },
+  //specifies source mapping for easier debugging
+  devtool: 'cheap-module-eval-source-map',
+  //specify location to host for webpack-dev-server
+  //specifies to the dev server where root html file can be found, ./ is the default
+  // devServer: {
+  //   contentBase: './'
+  // }
+  plugins: [
+    new CleanPlugin.CleanWebpackPlugin()
+  ]
+};
+
+//can also specify multilple entry points in the above module.exports
+entry: {
+    welcome: './src/welcome-page/welcome.js',
+    about: './src/about-page/about.js',
+    // etc.
+}
+
+//specify "build": "webpack" in package.json to build with webpack
+//specify "build:dev": "webpack-dev-server" in package for live reload on build using webpack-dev-server
+{
+    "name": "javascript-complete-guide",
+    "version": "1.0.0",
+    "description": "JavaScript - The Complete Guide",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "webpack",
+      "build:dev": "webpack-dev-server",
+      "build:prod": "webpack --config webpack.config.prod.js"
+    },
+    "author": "Maximilian Schwarzmueller",
+    "license": "ISC",
+    "devDependencies": {
+      "clean-webpack-plugin": "^3.0.0",
+      "eslint": "^6.4.0",
+      "webpack": "^4.40.2",
+      "webpack-cli": "^3.3.9",
+      "webpack-dev-server": "^3.8.1"
+    }
+  }
+  
+
+Run the below build command to generate bundled optimized script
+npm run build
+
+install below server package to live reload on code changes
+npm install --save-dev webpack-dev-server
+
+lauch live reloading server for the configurations given above
+npm run build:dev
+
+build project for production for the configurations give above
+//note: you should have webpack.config.prod.js file with same contents as webpack.config.js
+//except that mode: 'development' , devtool: 'cheap-source-map' , filename: '[contenthash].js'
+//'cheap source map' tells to generated highly optimized code, but can only debugged to certain level.
+npm run build:prod
+
+install plugin to clean webpack output directory before running build
+npm install --save-dev clean-webpack-plugin
+
+also can use html-loader css-loader and style-loader to pack html and css files
+Reference: https://www.youtube.com/watch?v=aT1rkp1UJ00

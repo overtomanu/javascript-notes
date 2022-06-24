@@ -1,0 +1,1188 @@
+Javascript executing in browser has access to two global objects - document and window
+
+Document is the root DOM ( DOcument Object Model ) Node
+    provides access to element querying, DOM content etc
+    document.body => Selects the <body> element node.
+    document.head => Selects the <head> element node.
+
+window is the active browser window/tab
+    acts as global storage for scripts
+    provides access to window specific properties and method
+    eg: window.alert method shows dialog.
+
+DOM nodes and elements
+---------------------
+Nodes are
+    The objects that make up the DOM.
+    HTML tags are “element nodes” (or just "elements")
+    Text creates “text nodes”. text nodes are created automatically when you set content of elements. 
+    Attributes create “attribute nodes”
+
+Elements are
+    one type of nodes
+    Special properties and methods to interact with the elements
+    Available methods and properties depend on the kind of element
+    Can be selected in various different ways (via JavaScript)
+    Can be created and removed via JavaScript
+
+querySelector(), getElementById()
+    - returns single elements
+    - different ways of querying elements,(by CSS selector, id etc)
+    - direct reference to DOM element is returned
+
+querySelectorAll(), getElementsByTagName()
+    - returns collection of elements like array, NodeList
+    - different ways of querying elements,(by CSS selector, by tag name, by CSS class)
+    - querySelectorAll will return non live node list ( like a snapshot of currently rendered DOM). 
+     (This means if you add element with same tag as the currently queried tag via javascript in some 
+      other part of the code, then this result node list will not be updated. However, reference is 
+      returned for individual elements in node list which can then be used to change content/
+      attributes of those elements which will get reflected in web page.)
+    - getElementsByTagName returns live node list.
+
+document.querySelector(<CSS selector>)
+---------------------
+Takes any CSS selector (e.g. '#some-id', '.some-class' or 'div p.some-class') and 
+returns the first (!) matching element in the DOM. Returns null if no matching element could be found.
+
+document.querySelectorAll(<CSS selector>)
+---------------------
+Takes any CSS selector (e.g. '#some-id', '.some-class' or 'div p.some-class') and returns all matching elements in the DOM as a static (non-live) NodeList. Returns and empty NodeList if no matching element could be found.
+
+//finds element by id
+document.getElementById("someid");
+document.querySelector('#someid')
+
+//finds elements by class name
+document.getElementsByClassName(name); 
+
+//finds elements by tag name
+document.getElementsByTagName(name);
+//returns HTMLCollection of elements
+
+//get first element having class "list-item"
+document.querySelector('.list-item')
+
+//select first list item using css query selector
+document.querySelector('ul li:first-of-type');
+
+//select last list item using css query selector
+document.querySelector('ul li:last-of-type');
+
+//can execute query selector methods on a node to search only through that node's child
+const h1 = document.getElementById("main-title");
+//h1.querySelectorAll(..)
+//eg: searching for nodes under an element
+const ul = document.querySelector('ul');
+ul.querySelector('li');
+
+//prints object methods and properties when executed in chrome dev tools
+console.dir(document.getElementById("main-title"));
+
+Modifying html elements from javascript
+---------------------------------------
+<p id="welcome-text" class="text-default“>Welcome!</p>
+const p = document.getElementById('welcome-text');
+p.textContent = "Welcome!"
+p.id = "welcome-text"
+p.className = "text-default"
+p.className = "new-class" 
+    <p … class="new-class">
+
+sample HTML:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DOM Interaction</title>
+  </head>
+  <body>
+    <header><h1 id="main-title">Dive into the DOM!</h1></header>
+    <ul>
+      <li>Item 1</li>
+      <li class="list-item">Item 2</li>
+      <li class="list-item">Item 3</li>
+    </ul>
+    <input type="text" value="default text">
+  </body>
+</html>
+
+const h1 = document.getElementById('main-title');
+h1.textContent
+//returns
+"Dive into the DOM!"
+
+h1.textContent = "new content"
+//updates text in browser
+'new content'
+
+h1.style.color = 'white';
+//changes text color to white in browser
+
+background-color property in javascript is accessed as "backgroundColor"
+h1.style.backgroundColor = 'black';
+//changes backgroundColor in browser
+
+//selecting closest ancestor node/html element
+const liFirst = document.querySelector("li");
+liFirst.closest("body")
+//returns html body element
+
+liFirst.closest("header")
+//returns null as header element is not a ancestor of li element.
+
+//The innerHTML property can be used on almost all HTML elements to change its content.
+var elem = document.getElementById("demo");
+elem.innerHTML = "Hello World!";
+
+var arr =  document.getElementsByClassName("demo");
+//accessing the second element
+arr[1].innerHTML = "Hi";
+
+//The following example gets all paragraph elements of the page and changes their content:
+
+<p>hi</p>
+<p>hello</p>
+<p>hi</p>
+<script>
+var arr = document.getElementsByTagName("p");
+for (var x = 0; x < arr.length; x++) {
+  arr[x].innerHTML = "Hi there";
+}
+</script>
+
+HTML element property/attribute live synchronization
+-----------------------------------
+Often (but not always!), attributes are mapped to properties and
+"live synchronization" is set up.
+eg:
+<input id="input-1" class="input-default" value="Enter text…">
+
+Attributes (placed in HTML code,       const input
+on element tags)
+------------------------------------------------------
+1:1 mapping (+ live-sync)           => input.id
+Different names (but live-sync)     => input.className
+1:1 mapping (1-way live-sync)       => input.value
+
+Testing and syncing input.value via javascript
+To set default text:
+input.setAttribute('value','some other text default')
+(This is will not change the value that user entered into input field)
+
+To set text in input field so that its reflected in web page in browser
+(sets some other text default in input field in webpage. text default was set in previous call via setter method)
+input.value = input.getAttribute('value')
+
+
+DOM element API methods
+---------------
+Each element in the DOM has a set of properties and methods that provide information 
+about their relationships in the DOM:
+element.childNodes returns an array of an element's child nodes.
+element.firstChild returns the first child node of an element.
+element.lastChild returns the last child node of an element.
+element.hasChildNodes returns true if an element has any child nodes, otherwise false.
+element.nextSibling , element.nextElementSibling returns the next node at the same tree level.
+element.previousSibling returns the previous node at the same tree level.
+element.parentNode, element.parentElementNode returns the parent node of an element.
+document.body.firstElementChild.nextElementSibling to get first html element and then get its sibling
+    (which is the second html element) 
+    (here elementChild means javascript objects corresponding to html tag's and it ignores text nodes which also includes child nodes for whitespace between the tags )
+document.body.lastElementChild.previousElementSibling selects last but one HTML element
+
+document.documentElement.parentElement is null, whereas document.documentElement.parentNode returns entire document object as node.
+
+select all child nodes of an element and change their content:
+---------------
+//tryout code by opening file "JSselectingAndChangingDomElements.html"
+function setText() {
+    var a = document.getElementById("demo");
+    var arr = a.childNodes;
+    for (var x = 0; x < arr.length; x++) {
+        arr[x].innerHTML = "new text";
+    }
+}
+
+displaying date every second
+---------------
+//JSDisplayCurrentDateEverySecond.html
+function printTime() {
+  var d = new Date();
+  var hours = d.getHours();
+  var mins = d.getMinutes();
+  var secs = d.getSeconds();
+  document.body.innerHTML = hours+":"+mins+":"+secs;
+}
+setInterval(printTime, 1000);
+
+execute function/code on page load
+---------------
+//JSexecuteOnPageLoad.html
+//calling the function in window.onload to make sure the HTML is loaded
+window.onload = function() {
+    setTimeout(()=>{
+        var el = document.getElementsByTagName('a');
+        el[0].href= "http://www.sololearn.com";
+        el[0].textContent="New link";
+    },5000);    
+};
+
+change html element style in javascript
+---------------
+//JSChangeElementStyleAfter2Seconds.html
+All CSS properties can be set and modified using JavaScript. Just remember, that you cannot use dashes (-) in the property names: these are replaced with camelCase versions, where the compound words begin with a capital letter.
+For example: the background-color property should be referred to as backgroundColor.
+
+const movieList = document.getElementById('movie-list');
+movieList.style.backgroundColor = 'red';
+//or you can access property by actual CSS names using bracket notation
+movieList.style['background-color'] = 'red';
+
+//calling the function in window.onload to make sure the HTML is loaded
+window.onload = function() {
+    setTimeout(()=>{
+        var x = document.getElementById("demo");
+        x.style.color = '#6600FF';
+        x.style.width = '10px';
+        x.style.backgroundColor = '#03fc17';
+    },2000)
+};
+
+add/append child element to a html element in javascript
+---------------
+//JSappendChildElementToAHtmlElementInJavascript.html
+window.onload = function() {
+    //creating a new paragraph
+    var p = document.createElement("p");
+    var node = document.createTextNode("Some new text");
+    //adding the text to the paragraph
+    p.appendChild(node);
+    
+    var div = document.getElementById("demo");
+    //adding the paragraph to the div
+    div.appendChild(p);
+};
+
+remove child element from a html element in javascript
+---------------
+//JSremoveHtmlElementAfter2Seconds.html
+An alternative way of achieving the same result would be the use of the parentNode property to get the parent of the element we want to remove:
+var child = document.getElementById("p1");
+child.parentNode.removeChild(child);
+
+window.onload = function() {
+    var parent = document.getElementById("demo");
+    var child = document.getElementById("p1");
+    parent.removeChild(child);
+};
+
+replace child element from a html element in javascript
+---------------
+//JSReplaceHtmlElement.html
+window.onload = function() {
+    setTimeout(()=>{
+        var p = document.createElement("p");
+        var node = document.createTextNode("======>>>>>>> This is new <<<<<<<======");
+        p.appendChild(node);
+
+        var parent = document.getElementById("demo");
+        var child = document.getElementById("p1");
+        parent.replaceChild(p, child);
+    },2000);
+};
+
+creating animation using javascript
+---------------
+//JScreatingAnimations.html
+window.onload = function() {
+    var pos = 0; 
+    //our box element
+    var box = document.getElementById('box');
+    var t = setInterval(move, 10);
+
+    function move() {
+        if(pos >= 150) {
+            clearInterval(t);
+        }
+        else {
+            pos += 1;
+            box.style.left = pos+'px';
+        }
+    }
+};
+
+Events on html elements available for handling in javascript
+---------------------------------------------
+You can write JavaScript code that executes when an event occurs, such as when a user clicks an HTML element, moves the mouse, or submits a form.
+When an event occurs on a target element, a handler function is executed.
+The browser binds "this" on the event listener function to the DOM element that trigerred the event.
+(Except arrow functions, for arrow functions "this" is always binded to the object 
+where the arrow function is declared)
+while removing event listeners you have to pass the same function object which you used while adding event 
+listener. Using same arrow function definition or using function.bind(this) (which returns new function object) 
+in removeEventListener method will not work as this will new function object is passed. Care should be taken to 
+store a reference to the function and later pass this reference to removeEventListener.
+
+Common HTML events include:
+Event         Description
+------------------------------
+onclick       occurs when the user clicks on an element
+onload        occurs when an object has loaded
+onunload      occurs once a page has unloaded (for <body>)
+onchange      occurs when the content of a form element, the selection, or the checked state have changed (for <keygen>, and <textarea>)
+onmouseover   occurs when the pointer is moved onto an element, or onto one of its children
+onmouseout    occurs when a user moves the mouse pointer out of an element, or out of one of its children
+onmousedown   occurs when the user presses a mouse button over an element
+onmouseup     occurs when a user releases a mouse button over an element
+onblur        occurs when an element loses focus
+onfocus       occurs when an element gets focus
+
+//JSshowAlertOnButtonPressAndModifyBodyToShowDateOnAnotherButton.html
+<body>
+	<button onclick="show();">Click Me to show alert</button>
+	<button id="demo" onclick="show();">Click Me to show date</button>
+</body>
+<script>
+	function show() {
+		alert("Hi there");
+	};
+	window.onload = function () {
+		var x = document.getElementById('demo');
+		x.onclick = function () {
+			document.body.innerHTML = Date();
+		}
+	};
+</script>
+
+//JSonchangeEventChangeTextToUppercaseOnTabOut.html
+<body>
+    <input type="text" id="name" onchange="change()">
+</body>
+<script>
+    function change() {
+        var x = document.getElementById('name');
+        x.value = x.value.toUpperCase();
+    }
+</script>
+
+adding and removing event listeners
+------------------------------
+//JSaddingAndRemovingEventListeners.html
+//you can add multiple event listeners
+<body>
+    <button id="demo">Start</button>
+</body>
+<script>
+    window.onload = function() {
+        var btn = document.getElementById("demo");
+        btn.addEventListener("mouseover", myFunction);
+
+        function myFunction() {
+            alert(Math.random());
+            btn.removeEventListener("mouseover", myFunction);
+        }
+    };
+</script>
+
+Event Propagation
+------------------------------
+There are two ways of event propagation in the HTML DOM: bubbling and capturing.
+In bubbling, the innermost element's event is handled first and then the outer element's event is handled.
+In capturing, the outermost element's event is handled first and then the inner.
+Capturing goes down the DOM. Bubbling goes up the DOM.
+
+The addEventListener() method allows you to specify the propagation type with the "useCapture" parameter.
+
+// The default value for "useCapture" is false, which means the bubbling propagation is used
+addEventListener(event, function, useCapture)
+
+//Capturing propagation
+elem1.addEventListener("click", myFunction, true); 
+
+//Bubbling propagation
+elem2.addEventListener("click", myFunction, false);
+
+//adding event listener for scrolling
+//note: lot of scroll events get fired when user scrolls
+window.addEventListener("scroll",event => {
+    console.log(event);
+})
+
+//stopping event propogation / bubbling using event.stopPropagation
+//stopping other event listeners of the html element using event.stopImmediatePropogation()
+const button = document.querySelector('button');
+const div = document.querySelector('div');
+
+div.addEventListener('click', event => {
+  console.log('CLICKED DIV');
+  console.log(event);
+});
+
+button.addEventListener('click', event => {
+  event.stopPropagation();
+  event.stopImmediatePropogation();
+  console.log('CLICKED BUTTON');
+  console.log(event);
+});
+
+NOTE:
+---------
+some events like mouseenter event dont bubble and propogate.
+check event.bubbles property to check if a given event bubbles.
+
+//adding submit event listener to form
+//also prevent default action of page being reloaded on submit, using event.preventDefault method
+const form = document.querySelector('form');
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  console.log(event);  
+});
+
+//event listener method gets "Event" object as param
+//this param has useful properties
+
+//refers the html element (eg: a button element when clicked)
+Event.target
+
+//indicates if respective keys was pressed
+Event.altKey
+Event.ctrlKey
+Event.shiftKey
+
+//gets coordinates where the mouse pointer was when click happened.
+Event.clientX Event.clientY
+
+//which component cursor was on before trigerring the mouseEntered event
+Event.relatedTarget
+
+Event delegation
+----------------
+Highlighting a list item using single event listener. Click can happen on any one of the child of list item 
+<h2> and <p> and whole list item is highlighted.
+
+<ul>
+    <li>
+        <h2>Item 1</h2>
+        <p>Some text</p>
+    </li>
+    <li>
+        <h2>Item 2</h2>
+        <p>Some text</p>
+    </li>
+    <li>
+        <h2>Item 3</h2>
+        <p>Some text</p>
+    </li>
+</ul>
+
+const listItems = document.querySelectorAll('li');
+const list = document.querySelector('ul');
+
+//naive implementation which highlights only child item and not the whole list item.
+// listItems.forEach(listItem => {
+//   listItem.addEventListener('click', event => {
+//     event.target.classList.toggle('highlight');
+//   });
+// });
+
+list.addEventListener('click', event => {
+  // console.log(event.currentTarget);
+  // event.target.classList.toggle('highlight');
+  event.target.closest('li').classList.toggle('highlight');
+});
+
+Handling drag events
+------------------------------
+Reference: https://www.udemy.com/course/javascript-the-complete-guide-2020-beginner-advanced/learn/lecture/16183581#questions
+Refer image: "implementing drag and drop.png"
+set draggable=true on items on which you want to enable drag
+
+
+<section id="active-projects">
+<header>
+  <h2>Active Projects</h2>
+</header>
+<ul>
+  <li
+    id="p1"
+    data-extra-info="Got lifetime access, but would be nice to finish it soon!"
+    class="card"
+    draggable="true"
+  >
+    <h2>Finish the Course</h2>
+    <p>Finish the course within the next two weeks.</p>
+    <button class="alt">More Info</button>
+    <button>Finish</button>
+  </li>
+  <li
+    id="p2"
+    data-extra-info="Not really a business topic but still important."
+    class="card"
+    draggable="true"
+  >
+    <h2>Buy Groceries</h2>
+    <p>Don't forget to pick up groceries today.</p>
+    <button class="alt">More Info</button>
+    <button>Finish</button>
+  </li>
+</ul>
+</section>
+<section id="finished-projects">
+<header>
+  <h2>Finished Projects</h2>
+</header>
+<ul>
+  <li
+    id="p3"
+    data-extra-info="Super important conference! Fictional but still!"
+    class="card"
+    draggable="true"
+  >
+    <h2>Book Hotel</h2>
+    <p>
+      Academind conference takes place in December, don't forget to book a
+      hotel.
+    </p>
+    <button class="alt">More Info</button>
+    <button>Activate</button>
+  </li>
+</ul>
+</section>
+
+script code to handle drag events
+-----------
+
+connectDrag() {
+    const item = document.getElementById(this.id);
+    item.addEventListener('dragstart', event => {
+        event.dataTransfer.setData('text/plain', this.id);
+        event.dataTransfer.effectAllowed = 'move';
+    });
+
+    item.addEventListener('dragend', event => {
+        console.log(event);
+    });
+}
+
+connectDroppable() {
+    const list = document.querySelector(`#${this.type}-projects ul`);
+
+    list.addEventListener('dragenter', event => {
+      if (event.dataTransfer.types[0] === 'text/plain') {
+        list.parentElement.classList.add('droppable');
+        //need to do preventDefault to trigger drop event
+        event.preventDefault();
+      }
+    });
+
+    list.addEventListener('dragover', event => {
+      if (event.dataTransfer.types[0] === 'text/plain') {
+        event.preventDefault();
+      }
+    });
+
+    list.addEventListener('dragleave', event => {
+      
+        //should remove background color (added in css class droppable)
+      //only if the current component the drag goes into (indicated by related target)
+      // is not inside current list element
+      //event.Target is the element from which dragleave is happening and 
+      //event.relatedTarget is element to which drag entered
+
+      if (event.relatedTarget.closest(`#${this.type}-projects ul`) !== list) {
+        list.parentElement.classList.remove('droppable');
+      }
+    });
+
+    list.addEventListener('drop', event => {
+      const prjId = event.dataTransfer.getData('text/plain');
+      if (this.projects.find(p => p.id === prjId)) {
+        return;
+      }
+      document
+        .getElementById(prjId)
+        .querySelector('button:last-of-type')
+        .click();
+      list.parentElement.classList.remove('droppable');
+      // event.preventDefault(); // not required
+    });
+  }
+
+
+Importing javascript file in HTML
+------------------------------
+//Refer "HTML script tag attribute behavior.png"
+You can have script tag after HTML body in which case browser will parse HTML body first 
+and then download and execute JS script files in order
+
+If you have script tag in head then JS script files will be downloaded and executed first before HTML body.
+HTML body typically has buttons and other elements to which event listeners are added. 
+If JS script is executed first then it will error out.
+
+<html>
+	<head>
+		<title>some title</title>
+	</head>
+	<body>
+		<div id="demo">some content</div>
+	</body>
+    <script>
+        <script src="assets/scripts/vendor.js"></script>
+        <script src="assets/scripts/app.js"></script>
+    </script>
+</html>
+
+---------------
+
+adding script tag with defer causes JS script files to be downloaded simultaneously while HTML body 
+is being parsed. However JS script file will be executed only after html body is fully parsed and loaded.
+JS scripts are executed one after other in the other they are declared inside the HTML <head> tag.
+defer and async tags are not honored for inline javascript code since it doesn't make sense as there is no 
+separate download of files involved.
+
+<html>
+	<head>
+		<title>some title</title>
+        <script src="assets/scripts/vendor.js" defer></script>
+        <script src="assets/scripts/app.js" defer></script>
+	</head>
+	<body>
+		<div id="demo">some content</div>
+	</body>
+    <script>
+    </script>
+</html>
+
+---------------
+
+<script src="assets/scripts/vendor.js" async></script>
+<script src="assets/scripts/app.js" async></script>
+
+adding script tag with async causes JS script files to be downloaded simultaneously while the 
+HTML body is still being parsed. JS script is executed immediately after download and blocks HTML parsing.
+Order of execution of JS scripts is not guranteed in async.
+
+Form Validation
+------------------------------
+HTML5 adds some attributes that allow form validation. For example, the required attribute can be added to an input field to make it mandatory to fill in.
+The form element has an onsubmit event that can be handled to perform validation.
+//JSformValidation.html
+<form onsubmit="return validate()" method="post">
+  Number: <input type="text" name="num1" id="num1" />
+  <br />
+  Repeat: <input type="text" name="num2" id="num2" />
+  <br />
+  <input type="submit" value="Submit" />
+</form>
+
+Different ways of creating and inserting HTML elements
+---------------------
+- With adding (rendering) HTML string: innerHTML, insertAdjacentHTML()
+- With createElement():  
+    - append new DOM element/node: appendChild(), append()
+    - insert DOM node at specific position: prepend(), after(), before(), inserBefore()
+    - replace existing DOM element/node: replaceChild(), replaceWith().
+
+//Refer dom-04-styling
+const section = document.querySelector('section');
+//both of the below replace entire nested nodes with new text/html content
+//set text content
+section.textContent = 'New content!';
+section.innerHTML = '<h2>A new title!</h2>';
+
+//Note: innerHTML is not good when you are adding something to existing content. Because
+//when using innerHTML all the contents which is replaced by innerHTML is re-rendered even
+//if it is based on existing content (as shown below). Significant disadvantage is that on re- 
+//rendering, user input is lost if existing element <input> type element. Eg code below:
+const div = document.querySelector('div');
+div.innerHTML = div.innerHTML + '<p>Something went wrong!</p>';
+
+//To keep user input, use insertAdjacentHTML
+//still another disadvantage with this approach is you dont get back reference to the newly added node
+//if you get reference it will be easier to do stuff like add event listener/change styles etc, 
+//but with below approach you have will use querySelector to get reference to the newly added element.
+//afternend, beforebegin etc control where the node is inserted
+div.insertAdjacentHTML('beforeend','<p>Something went wrong!</p>');
+
+//getting reference and inserting new element into the DOM
+const list = document.querySelector('ul');
+const newLi = document.createElement('li');
+list.appendChild(newLi); //just append() also works
+newLi.textContent="Item 4";
+newLi.style.backgroundColor='blue';
+
+//to insert in the beginning
+//can supply multiple child nodes as arguments to append, prepend
+list.prepend(newLi);
+
+//to insert at last but one child element
+//note: if newLi is already added to the DOM, then its detached from existing place and added to the
+//newly specified position below. It's NOT copied (you can copy an element via someElement.cloneNode
+//(true) though).
+list.lastElementChild.before(newLi);
+
+//replace existing node with new node
+list.firstElementChild.replaceWith(newLi);
+
+//clone and add node
+//clone method has option whether to do deep copy(child elements are also cloned) or not
+const newLi2 = newLi.cloneNode(true);
+list.append(newLi,newLi2);
+
+//removing elements
+list.remove();
+//Internet explorer doesn't support remove, so you can use below method
+list.parentElement.removeChild(list);
+
+Attaching / associating data to DOM elements
+------------------------------
+DOM elements (tags) can have attributes starting with data-* (data-<anything>) which can be used to store
+any information / data about that node.
+
+eg:
+<li
+    id="p1"
+    data-extra-info="Got lifetime access, but would be nice to finish it soon!"
+    class="card"
+>
+//accessing data attributes info in javascript code
+const projectElement = document.getElementById("p1");
+//attribute name is automatically converted to camel case
+const tooltipText = projectElement.dataset.extraInfo;
+//set some extra data
+projectElement.dataset.someInfo="Test";
+//sets data-some-info="Test" in the DOM node
+
+Accessing DOM element box dimensions
+------------------------------
+//returns DOMRect object which has bottom,top,right,left,height,width, (x,y coordinates)
+document.getElementById("main-box").getBoundingClientRect();
+
+//returns the distance of the outer border of the current element relative to the inner border 
+//of the top of the offsetParent, the closest positioned ancestor element.
+document.getElementById("main-box").offsetTop
+
+The Element.scrollTop property gets or sets the number of pixels that an element's content is scrolled vertically.
+An element's scrollTop value is a measurement of the distance from the element's top to its topmost visible 
+content. When an element's content does not generate a vertical scrollbar, then its scrollTop value is 0.
+
+document.getElementById("main-box").scrollTop
+
+For more attributes refer "HTML element size and position DOM properties.png"
+
+//get width and height of browser window, includes width of scrollbar if present.
+//so this width and height is not indicative of the width and height available for content to be rendered.
+window.innerWidth
+window.innerHeight
+
+//get width and height without scrollbars (if present)
+document.documentElement.clientWidth
+document.documentElement.clientHeight
+
+Handling scrolling
+------------------------------
+//scroll down and right by 100 pixels, absolute position
+document.getElementById("main-box").scrollTo(100,100)
+
+//scroll for given number of pixels
+//if executed twice below code will scroll down 50 pixels incrementally twice
+document.getElementById("main-box").scrollTo(0,50)
+
+//scroll to a specific element and show it in view
+document.getElementById("main-box").scrollintoview({behavior:"smooth"});
+
+Storing element body to be used in javascript in html document
+------------------------------
+we can use <template> tag to store element body. This tag by default is not rendered by browser.
+eg:
+<template id="tooltip">
+    <h2>More Info</h2>
+    <p></p>
+</template>
+
+//accessing template tag content in js and setting it in new element
+const tooltipElement = document.createElement('div');
+tooltipElement.className = 'card';
+const tooltipTemplate = document.getElementById('tooltip');
+const tooltipBody = document.importNode(tooltipTemplate.content, true);
+tooltipBody.querySelector('p').textContent = this.text;
+tooltipElement.append(tooltipBody);
+
+loading and executing javascript code dynamically on click of button
+---------------
+class App {
+    static init() {
+        document
+            .getElementById('start-analytics-btn')
+            .addEventListener('click', this.startAnalytics);
+
+        //OR directly set script content
+        //const somescript = document.createElement("script");
+        //somescript.textContent="alert('Hi there')";
+    }
+
+    static startAnalytics() {
+        const analyticsScript = document.createElement('script');
+        analyticsScript.src = 'assets/scripts/analytics.js';
+        analyticsScript.defer = true;
+        document.head.append(analyticsScript);
+    }
+}
+
+navigate to another url
+------------------------------
+// actual object window.location
+location.href="https://www.udemy.com/course/react-native-the-practical-guide/?couponCode=D_0422"
+
+location.host
+//'www.udemy.com'
+
+//full domain including protocol
+location.origin
+//'https://www.udemy.com'
+
+location.pathname
+//'/course/react-native-the-practical-guide/'
+
+history.back()
+//navigates to previous URL
+
+history.forward()
+//navigates to the URL from which we came back
+
+history.length
+//how many URLs did user navigate in this tab
+
+history.go(-5)
+//go back 5 URLs
+
+navigator.userAgent
+//indicates the browser, might be a bit misleading as they mostly it includes 
+//all browser strings for historical reasons
+
+navigator.geolocation.getCurrentPosition((data)=>{console.log(data)})
+//get current location, latitude and longitude
+
+Sending http requests using XMLHttpRequest
+------------------------------------------
+
+const listElement = document.querySelector('.posts');
+const postTemplate = document.getElementById('single-post');
+const form = document.querySelector('#new-post form');
+const fetchButton = document.querySelector('#available-posts button');
+const postList = document.querySelector('ul');
+
+function sendHttpRequest(method, url, data) {
+  const promise = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    //xhr.setRequestHeader method can be used to set request headers
+    xhr.open(method, url);
+
+    xhr.responseType = 'json';
+
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject(new Error('Something went wrong!'));
+      }
+      // const listOfPosts = JSON.parse(xhr.response);
+    };
+
+    //xhr.error is called only if there is problem invoking requests due to issues such as network issues.
+    //for response's like 404 not found coming from server, xhr.onload is called with xhr.status set as 404.
+    xhr.onerror = function() {
+      reject(new Error('Failed to send request!'));
+    };
+
+    xhr.send(JSON.stringify(data));
+  });
+
+  return promise;
+}
+
+async function fetchPosts() {
+  try {
+    const responseData = await sendHttpRequest(
+      'GET',
+      'https://jsonplaceholder.typicode.com/pos'
+    );
+    const listOfPosts = responseData;
+    for (const post of listOfPosts) {
+      const postEl = document.importNode(postTemplate.content, true);
+      postEl.querySelector('h2').textContent = post.title.toUpperCase();
+      postEl.querySelector('p').textContent = post.body;
+      postEl.querySelector('li').id = post.id;
+      listElement.append(postEl);
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function createPost(title, content) {
+  const userId = Math.random();
+  const post = {
+    title: title,
+    body: content,
+    userId: userId
+  };
+
+  sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', post);
+}
+
+//adding listeners to buttons for fetch(GET) posts and create(POST) post
+fetchButton.addEventListener('click', fetchPosts);
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  const enteredTitle = event.currentTarget.querySelector('#title').value;
+  const enteredContent = event.currentTarget.querySelector('#content').value;
+
+  createPost(enteredTitle, enteredContent);
+});
+
+//event listener for DELETE post
+postList.addEventListener('click', event => {
+  if (event.target.tagName === 'BUTTON') {
+    const postId = event.target.closest('li').id;
+    sendHttpRequest(
+      'DELETE',
+      `https://jsonplaceholder.typicode.com/posts/${postId}`
+    );
+  }
+});
+
+Sending http requests using fetch
+------------------------------------------
+fetch is the modern API (not supported in IE) for sending http requests.
+It returns a promise by default.
+
+function sendHttpRequest(method, url, data) {
+  // return promise;
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        return response.json().then(errData => {
+          console.log(errData);
+          throw new Error('Something went wrong - server-side.');
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      throw new Error('Something went wrong!');
+    });
+}
+
+sending form data using fetch
+--------------
+//can use below code in sendHttpRequest method
+//const form = document.querySelector('#new-post form');
+const fd = new FormData(form);
+
+// can add request headers as below
+// fd.append('title', title);
+// fd.append('body', content);
+
+fd.append('userId', userId);
+sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', fd);
+
+corresponding html
+--------
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Http</title>
+    <link rel="stylesheet" href="assets/styles/app.css" />
+    <script src="assets/scripts/app.js" defer></script>
+  </head>
+  <body>
+    <template id="single-post">
+      <li class="post-item">
+        <h2></h2>
+        <p></p>
+        <button>DELETE</button>
+      </li>
+    </template>
+    <section id="new-post">
+      <form>
+        <div class="form-control">
+          <label for="title">Title</label>
+          <input type="text" id="title" />
+        </div>
+        <div class="form-control">
+          <label for="content">Content</label>
+          <textarea rows="3" id="content"></textarea>
+        </div>
+        <button type="submit">ADD</button>
+      </form>
+    </section>
+    <section id="available-posts">
+      <button>FETCH POSTS</button>
+      <ul class="posts"></ul>
+    </section>
+  </body>
+</html>
+
+Third party library for invoking http endpoints - axios
+----------------
+https://axios-http.com/docs/intro
+
+axios considers technically correct requests but with response status 4xx as errors and will throw exceptions.
+For POST requests, axios will look at the object being posted and correctly set request header and 
+send either json or form data.
+
+Code samples:
+//GET
+const response = await axios.get(
+  'https://jsonplaceholder.typicode.com/posts'
+);
+const listOfPosts = response.data;
+
+//POST
+const fd = new FormData(form);
+// fd.append('title', title);
+// fd.append('body', content);
+fd.append('userId', userId);
+
+const response = await axios.post(
+  'https://jsonplaceholder.typicode.com/posts',
+  fd
+)
+
+//DELETE
+const postId = event.target.closest('li').id;
+axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+
+----------------------------------
+Browser storage
+----------------------------------
+refer folder "browser storage"
+
+localStorage is persisted even when user closes browser tab and reopens the web site/app.
+wheareas sessionStorage data is cleared when user closes the tab. However it is not cleared
+on clicking reload/refresh button.
+
+eg code:
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Browser Storage</title>
+    <link rel="stylesheet" href="app.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <button id="store-btn">STORE</button>
+    <button id="retrieve-btn">RETRIEVE</button>
+  </body>
+</html>
+
+const storeBtn = document.getElementById('store-btn');
+const retrBtn = document.getElementById('retrieve-btn');
+
+const userId = 'u123';
+const user = {
+  name: 'Max',
+  age: 30,
+  hobbies: ['Sports', 'Cooking']
+};
+
+storeBtn.addEventListener('click', () => {
+  sessionStorage.setItem('uid', userId);
+  localStorage.setItem('user', JSON.stringify(user));
+});
+
+retrBtn.addEventListener('click', () => {
+  const extractedId = sessionStorage.getItem('uid');
+  const extractedUser = JSON.parse(localStorage.getItem('user'));
+  console.log(extractedUser);
+  if (extractedId) {
+    console.log('Got the id - ' + extractedId);
+  } else {
+    console.log('Could not find id.');
+  }
+});
+
+sample code showing usage of indexed db:
+--------------
+const storeBtn = document.getElementById('store-btn');
+const retrBtn = document.getElementById('retrieve-btn');
+
+let db;
+
+const dbRequest = indexedDB.open('StorageDummy', 1);
+
+//called on successful connection to the existing db 
+//or the newly created of new db after call to onupgradeneeded returns successfully
+dbRequest.onsuccess = function(event) {
+  db = event.target.result;
+};
+
+//onupgradeneeded is called whenever new database is created
+//or database version is changed
+dbRequest.onupgradeneeded = function(event) {
+  db = event.target.result;
+
+  const objStore = db.createObjectStore('products', { keyPath: 'id' });
+
+  objStore.transaction.oncomplete = function(event) {
+    const productsStore = db
+      .transaction('products', 'readwrite')
+      .objectStore('products');
+    productsStore.add({
+      id: 'p1',
+      title: 'A First Product',
+      price: 12.99,
+      tags: ['Expensive', 'Luxury']
+    });
+  };
+};
+
+dbRequest.onerror = function(event) {
+  console.log('ERROR!');
+};
+
+storeBtn.addEventListener('click', () => {
+  if (!db) {
+    return;
+  }
+  const productsStore = db
+    .transaction('products', 'readwrite')
+    .objectStore('products');
+  productsStore.add({
+    id: 'p2',
+    title: 'A Second Product',
+    price: 122.99,
+    tags: ['Expensive', 'Luxury']
+  });
+});
+
+retrBtn.addEventListener('click', () => {
+  const productsStore = db
+    .transaction('products', 'readwrite')
+    .objectStore('products');
+  const request = productsStore.get('p2');
+
+  request.onsuccess = function() {
+    console.log(request.result);
+  }
+});

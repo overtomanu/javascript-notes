@@ -1,0 +1,117 @@
+Behaviour of conditional operators on string
+------------------------------
+Strings can also be compared with greater than (>) or lower/ smaller than (<) operators.
+JavaScript compares strings based on standard lexicographical ordering, using Unicode values.
+That means that b is greater than a for example.
+JavaScript always looks at the first character and only considers other characters if the first character is similar. In addition, capital characters are considered to be smaller than lowercase characters.
+See these examples:
+
+'ab' > 'aa' // true
+'a' > 'B' // true
+'a' > 'b' // false
+
+Falsy and Truthy values in javascript
+------------------------------
+number 0 is false, any other number is true
+""(empty string) is false, any other non empty string is true (including string "false")
+{} , [] and all other objects or arrays are treated as true
+null, undefined and NaN are always treated as false
+
+Primitive Values
+----------------
+Numbers
+Strings
+Booleans
+null
+undefined
+Symbol
+
+Reference Values (= Objects)
+--------------
+Everything else apart from primitives like below:
+{ … }
+Arrays
+DOM Nodes
+other built-in/custom created objects
+
+What are objects?
+----------------
+    - Typically reflect “real-world” entities Made up of properties & methods
+        - e.g. button, movie
+    - Allow us to apply real-world logic to coding
+    - Store data in properties and actions in methods
+    - Allow you to “group” related data together and split your code into logical pieces
+
+Here's an example of an object:
+
+const complexPerson = {
+    name: 'Max',
+    hobbies: ['Sports', 'Cooking'],
+    address: {
+        street: 'Some Street 5',
+        stateId: 5,
+        country: 'Germany',
+        phone: {
+            number: 12 345 678 9,
+            isMobile: true
+        }
+    },
+};
+
+Even though complexPerson has multiple nested reference values (nested arrays and objects), you end up with primitive values if you drill into the object.
+    - name holds a string ('Max') => Primitive value
+    - hobbies holds an array (i.e. a reference value) which is full of strings 
+        - ('Sports', 'Cooking') => Primitive values
+    - address holds an object which in turn holds a mixture of primitive values like 'Some Street 5' and nested objects (phone), but if you dive into phone, you find only numbers and booleans in there => Primitive values
+
+So you could say: Primitive values are the core building blocks that hold your data, objects (and arrays) are helpful for organizing and working with that data.
+
+"this" keyword
+----------------
+"this" always refers to the object which calls the function. 
+It doesn't matter if function is defined inside object or not.
+
+closure
+----------------
+Inside a function you can access global variables and also the variables declared in the outer function.
+Each function has its own lexical environment which stores the variables accessed by the function. 
+This is called closure. Closure can be used to emulate private methods. (intially there was no 
+support in javascript to declare private methods)
+
+var counter = (function() {
+  var privateCounter = 0;
+  function changeBy(val) {
+    privateCounter += val;
+  }
+
+  return {
+    increment: function() {
+      changeBy(1);
+    },
+
+    decrement: function() {
+      changeBy(-1);
+    },
+
+    value: function() {
+      return privateCounter;
+    }
+  };
+})();
+  
+console.log(counter.value());  // 0.
+
+counter.increment();
+counter.increment();
+console.log(counter.value());  // 2.
+
+counter.decrement();
+console.log(counter.value());  // 1.
+
+Numbers in javascript
+--------------------
+every number in javascript is a floating point number. It doesn't have separate special type 
+for integers.
+javascript internally stores number in binary ( base 2 ) format. so some fractions/decimals cannot be represented perfectly.
+console.log(02.+0.4);  // 0.6000000000000001
+console.log(0.2+0.4 === 0.6);  // false

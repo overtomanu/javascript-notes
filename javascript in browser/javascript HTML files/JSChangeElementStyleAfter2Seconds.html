@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JS change element style after 2 seconds</title>
+	</head>
+	<body>
+		<div id="demo" style="width:200px">some text</div>
+	</body>
+    <script>
+        //calling the function in window.onload to make sure the HTML is loaded
+        window.onload = function() {
+            setTimeout(()=>{
+                var x = document.getElementById("demo");
+                x.style.color = '#6600FF';
+                x.style.width = '10px';
+                x.style.backgroundColor = '#03fc17';
+            },2000)
+        };
+    </script>
+</html>

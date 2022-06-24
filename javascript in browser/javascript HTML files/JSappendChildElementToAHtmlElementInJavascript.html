@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>append child element to a html element in javascript</title>
+	</head>
+	<body>
+		<div id="demo">some content</div>
+	</body>
+    <script>
+        //calling the function in window.onload to make sure the HTML is loaded
+        window.onload = function() {
+            setTimeout(()=>{
+                //creating a new paragraph
+                var p = document.createElement("p");
+                var node = document.createTextNode("Some new text");
+                //adding the text to the paragraph
+                p.appendChild(node);
+
+                var div = document.getElementById("demo");
+                //adding the paragraph to the div
+                div.appendChild(p);
+            },2000)
+        };
+    </script>
+</html>

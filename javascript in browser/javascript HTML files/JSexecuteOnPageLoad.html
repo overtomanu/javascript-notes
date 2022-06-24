@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            //calling the function in window.onload to make sure the HTML is loaded
+            window.onload = function() {
+                setTimeout(()=>{
+                    var el = document.getElementsByTagName('a');
+                    el[0].href= "http://www.sololearn.com";
+                    el[0].textContent="New link";
+                },5000);
+            };
+        </script>
+        <title>Executing javascript on page load</title>
+    </head>
+    <body>
+        <a href="http://www.example.com">Example link</a>
+    </body>
+</html>

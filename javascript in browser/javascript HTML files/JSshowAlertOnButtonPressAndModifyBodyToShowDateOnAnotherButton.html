@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>JS show alert on button press and modify body to show date on another button</title>
+</head>
+
+<body>
+	<button onclick="show();">Click Me to show alert</button>
+	<button id="demo" onclick="show();">Click Me to show date</button>
+</body>
+<script>
+	function show() {
+		alert("Hi there");
+	};
+	window.onload = function () {
+		var x = document.getElementById('demo');
+		x.onclick = function () {
+			document.body.innerHTML = Date();
+		}
+	};
+</script>
+
+</html>
