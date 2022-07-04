@@ -1023,6 +1023,34 @@ console.log("b8:",b8); // 6
 console.log("c8:",c8); // 8
 console.log("d8:",d8); // 4
 
+console.log(`
+Initializing multi-dimensional array
+-----------------
+let defValue = 'foo'; // by default
+let myGrid = [...Array(6)].map(()=>Array(6).fill(defValue));
+
+console.log('myGrid :>> ', myGrid);
+`);
+
+let defValue = 'foo'; // by default
+let myGrid = [...Array(6)].map(()=>Array(6).fill(defValue));
+
+console.log('myGrid :>> ', myGrid);
+
+console.log(`
+using array as stack
+--------------------
+`);
+
+let stack=new Array(10);
+stack.push("element1");
+stack.push(["element2"]);
+stack.push(101);
+
+while((stackElem=stack.pop())!==undefined){
+    console.log("popped element:",stackElem);
+}
+
 console.log("\n------------------");
 
 //implicit arg "arguments" inside javascript function
@@ -1478,6 +1506,30 @@ funcVar=mulFuncVar;
 console.log('funcVar(5,6) after equating with mulFuncVar :>> ', funcVar(5,6));
 
 console.log('42===42.0 :>> ', 42===42.0);
+
+console.log(`
+recursive function assigned to variable can be used inside the function
+--------------------
+var recursiveFunctionTest=function(num){
+    if(num===0){
+        return;
+    }
+    console.log("recursiveFunctionTest:"+num);
+    recursiveFunctionTest(num-1);
+}
+
+recursiveFunctionTest(5);
+`);
+
+var recursiveFunctionTest=function(num){
+    if(num===0){
+        return;
+    }
+    console.log("recursiveFunctionTest:"+num);
+    recursiveFunctionTest(num-1);
+}
+
+recursiveFunctionTest(5);
 
 console.log(`
 Tagged templates
