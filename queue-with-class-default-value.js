@@ -1,4 +1,4 @@
-class Node {
+class LinkedListNode {
     value;
     next;
     constructor(value=null,next=null){
@@ -7,12 +7,12 @@ class Node {
     }
 }
 
-class Queue {
-    head = new Node();
+class LinkedListQueue {
+    head = new LinkedListNode();
     tail = this.head;
     
     addElement(val){
-        let newNode=new Node(val,null);
+        let newNode=new LinkedListNode(val,null);
         this.tail.next=newNode;
         this.tail=this.tail.next;
     }
@@ -44,7 +44,7 @@ class Queue {
     }
 }
 
-let queue=new Queue();
+let queue=new LinkedListQueue();
 queue.addElement("test1");
 queue.addElement("test2");
 console.log('queue.toString() :>> ', queue.toString());

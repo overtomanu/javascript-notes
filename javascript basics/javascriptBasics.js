@@ -1024,7 +1024,7 @@ console.log("c8:",c8); // 8
 console.log("d8:",d8); // 4
 
 console.log(`
-Initializing multi-dimensional array
+Initializing multi dimensional array
 -----------------
 let defValue = 'foo'; // by default
 let myGrid = [...Array(6)].map(()=>Array(6).fill(defValue));
