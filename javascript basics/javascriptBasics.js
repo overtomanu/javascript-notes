@@ -1027,13 +1027,15 @@ console.log(`
 Initializing multi dimensional array
 -----------------
 let defValue = 'foo'; // by default
-let myGrid = [...Array(6)].map(()=>Array(6).fill(defValue));
+let rows=6,cols=5;
+let myGrid = [...Array(rows)].map(()=>Array(cols).fill(defValue));
 
 console.log('myGrid :>> ', myGrid);
 `);
 
 let defValue = 'foo'; // by default
-let myGrid = [...Array(6)].map(()=>Array(6).fill(defValue));
+let rows=6,cols=5;
+let myGrid = [...Array(rows)].map(()=>Array(cols).fill(defValue));
 
 console.log('myGrid :>> ', myGrid);
 
