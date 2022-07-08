@@ -79,6 +79,23 @@ let replacedString = string753.replaceAll("A", "C");
 console.log('string753 :>> ', string753);
 console.log('string853 :>> ', string853);
 console.log('replacedString :>> ', replacedString);
+
+//character comparison
+if('B'>='A'){
+    console.log("B>=A");
+}
+
+//below comparison may not be correct
+if('Z'>='A'+10){
+    console.log("'D'>='A'+2");
+    console.log("'A'+10 >>",'A'+10);
+}
+
+if('D'.codePointAt(0)>='A'.codePointAt(0)+2){
+    console.log("'D'.codePointAt(0)>='A'.codePointAt(0)+2");
+    console.log("'A'.codePointAt(0)+2 :>> ", 'A'.codePointAt(0)+2);
+}
+
 `);
 //Javascript String is immutable
 //String is a primitive type in javascript
@@ -91,6 +108,26 @@ let replacedString = string753.replaceAll("A", "C");
 console.log('string753 :>> ', string753);
 console.log('string853 :>> ', string853);
 console.log('replacedString :>> ', replacedString);
+
+//character comparison
+if('B'>='A'){
+    console.log("B>=A");
+}
+
+//below comparison may not be correct
+if('Z'>='A'+10){
+    console.log("'D'>='A'+2");
+    console.log("'A'+10 >>",'A'+10);
+}
+
+if('D'.codePointAt(0)>='A'.codePointAt(0)+2){
+    console.log("'D'.codePointAt(0)>='A'.codePointAt(0)+2");
+    console.log("'A'.codePointAt(0)+2 :>> ", 'A'.codePointAt(0)+2);
+}
+console.log('"testString345".substring(0,4) :>> ', "testString345".substring(0,4));
+console.log('"testString345".substring(0,0) :>> ', "testString345".substring(0,0));
+console.log('""==="testString345".substring(0,0) :>> ', ""==="testString345".substring(0,0));
+console.log('"testString345".substring(3,2) :>> ', "testString345".substring(3,2));
 
 var x=50;
 var y=100;
