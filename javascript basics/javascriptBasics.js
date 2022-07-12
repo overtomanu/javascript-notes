@@ -224,6 +224,93 @@ a++;
 console.log('a==b after a++:>> ', a==b);
 
 console.log(`
+Bitwise operations in javascript
+--------------------------------
+
+-----------------------------------------------
+Operator	Name                    Description
+-----------------------------------------------
+&           AND                     Sets each bit to 1 if both bits are 1
+|           OR                      Sets each bit to 1 if one of two bits is 1
+^           XOR                     Sets each bit to 1 if only one of two bits is 1
+~           NOT                     Inverts all the bits
+<<          Zero fill left shift    Shifts left by pushing zeros in from the right and let the leftmost bits fall off
+>>          Signed right shift      Shifts right by pushing copies of the leftmost bit in from the left, and let the rightmost bits fall off
+>>>         Zero fill right shift   Shifts right by pushing zeros in from the left, and let the rightmost bits fall off
+
+//converting decimal to its binary representation string
+console.log('(-5 >>> 0).toString(2) :>> ', (-5 >>> 0).toString(2));
+console.log('parseInt(101, 2).toString(10) :>> ', parseInt(101, 2).toString(10));
+
+`);
+
+//converting decimal to its binary representation string
+console.log('(-5 >>> 0).toString(2) :>> ', (-5 >>> 0).toString(2));
+console.log('(-5).toString(2) :>> ', (-5).toString(2));
+console.log('parseInt(101, 2).toString(10) :>> ', parseInt(101, 2).toString(10));
+
+console.log('5 & 1 :>> ', 5 & 1);
+console.log('5 | 1 :>> ', 5 | 1);
+console.log('5 ^ 1 :>> ', 5 ^ 1);
+//"0000 0101" becomes "1111 1010" which is -6 in 2's complement format
+console.log('~5 => ', ~5);
+//101 becomes 1010 (8+2=10)
+console.log('5 << 1 => ', 5 << 1);
+//zero filled right shift
+console.log('-5 >>> 1 :>> ', -5 >>> 1);
+//signed right shift
+console.log('-5 >> 1 :>> ', -5 >> 1);
+
+
+console.log(`
+different number literals in javascript
+------------------
+// using binary literals
+let binary15 = 0b1111;
+console.log('binary15 :>> ', binary15);
+
+// octal literals, (zero prefix)
+let octal41 = 051;
+console.log('octal41 :>> ', octal41); // 41
+
+let octal41_2 = 0o51;
+console.log('octal41_2 :>> ', octal41_2); // 41 
+
+//058 would be invalid octal literal and would be considered a decimal number
+let invalidOctal = 058;
+console.log('invalidOctal :>> ', invalidOctal);
+
+//hexadecimal literals start with 0x
+let hex16 = 0x10;
+console.log('hex16 :>> ', hex16);
+
+//printing in hexadecimal, radix 16 supplied to toString method
+console.log('hex16.toString(16) :>> ', hex16.toString(16));
+`);
+
+// using binary literals
+let binary15 = 0b1111;
+console.log('binary15 :>> ', binary15);
+
+// octal literals, (zero prefix)
+let octal41 = 051;
+console.log('octal41 :>> ', octal41); // 41
+
+let octal41_2 = 0o51;
+console.log('octal41_2 :>> ', octal41_2); // 41 
+
+//058 would be invalid octal literal and would be considered a decimal number
+let invalidOctal = 058;
+console.log('invalidOctal :>> ', invalidOctal);
+
+//hexadecimal literals start with 0x
+let hex16 = 0x10;
+console.log('hex16 :>> ', hex16);
+
+//printing in hexadecimal, radix 16 supplied to toString method
+console.log('hex16.toString(16) :>> ', hex16.toString(16));
+
+console.log(`
 convert truthy or falsy value to actual boolean value using double bang operator
 ------------------------------
 ! operator coerces any value to boolean and another bang(!) negates it,
@@ -287,7 +374,7 @@ result=18+inputNumber;
 result-=5;
 result*=2;
 result/=10;
-//can have newlines in string literals when back tick is used
+//can have newlines and variables surrounded with ${} in string literals when back tick is used
 console.log(`
 let inputNumber=7;
 let result;
@@ -1277,6 +1364,7 @@ console.log('animals.slice() :>> ', animals.slice());
 // expected output: Array ["ant", "bison", "camel", "duck", "elephant"]
 
 var myArray = [10,20,"Hello",{}]
+console.log('Initial myArray :>> ', myArray);
 console.log('\nmyArray.push(10) length is returned :>> ', myArray.push(10));
 console.log('myArray after push :>> ', myArray);
 console.log('myArray.pop() :>> ', myArray.pop());
