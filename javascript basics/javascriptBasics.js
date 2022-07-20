@@ -328,6 +328,8 @@ assigning default value to variables using OR condition
 ------------------------------
 || and && generate NO booleans, they just treat the values before and after them as conditions (which therefore need to yield boolean values and are coerced to booleans if required).
 
+|| operator therefore returns the first truthy value it encounters
+
 let someInput="";
 let inputOrDefault = someInput||"Max"
 console.log('inputOrDefault :>> ', inputOrDefault);
@@ -335,22 +337,40 @@ console.log('inputOrDefault :>> ', inputOrDefault);
 let someInput="";
 let inputOrDefault = someInput||"Max"
 console.log('inputOrDefault :>> ', inputOrDefault);
+console.log('false||"Manu" :>> ', false||"Manu");
+console.log('false||"" :>> ', false||"");
+console.log('false||0 :>> ', false||0);
+console.log('0||false :>> ', 0||false);
+console.log('"Max"||"Manu" :>> ', "Max"||"Manu");
+console.log('false||"Max"||"Manu" :>> ', false||"Max"||"Manu");
 
 console.log(`
 assigning second value based on whether first value is falsy or truthy
 ------------------------------
-if first value is falsy value then assign falsy value else assign second value
+if any value is falsy value then assign falsy value else assign last truthy value
 let secondValue = "Max" && "Manu";
 console.log('secondValue :>> ', secondValue,"\n");
 let isLoggedIn = false;
 let firstVal = isLoggedIn && "Manu"
 console.log('firstVal :>> ', firstVal,"\n");
+console.log('false && "Manu" :>> ', false && "Manu");
+console.log('"Max" && false :>> ', "Max" && false);
+console.log('true && "Manu" :>> ', true && "Manu");
+console.log('true && "Manu" && "Max" :>> ', true && "Manu" && "Max");
+console.log('true && "Manu" && "Max" && "test" :>> ', true && "Manu" && "Max" && "test");
+console.log('true && "Manu" && false :>> ', true && "Manu" && false);
 `);
 let secondValue = "Max" && "Manu";
 console.log('secondValue :>> ', secondValue,"\n");
 let isLoggedIn = false;
 let firstVal = isLoggedIn && "Manu"
 console.log('firstVal :>> ', firstVal,"\n");
+console.log('false && "Manu" :>> ', false && "Manu");
+console.log('"Max" && false :>> ', "Max" && false);
+console.log('true && "Manu" :>> ', true && "Manu");
+console.log('true && "Manu" && "Max" :>> ', true && "Manu" && "Max");
+console.log('true && "Manu" && "Max" && "test" :>> ', true && "Manu" && "Max" && "test");
+console.log('true && "Manu" && false :>> ', true && "Manu" && false);
 
 // variables declared with const keyword cannot have their values changed later
 const defaultResult = 5;
@@ -1034,6 +1054,8 @@ console.log('[3,5,7,1,3,4].includes(7) :>> ', [3,5,7,1,3,4].includes(7));
 console.log('[3,5,7,1,3,4].indexOf(7) !== -1 :>> ', [3,5,7,1,3,4].indexOf(7) !== -1);
 //lastIndexOf method
 console.log('[3,5,7,1,3,4].lastIndexOf(3) :>> ', [3,5,7,1,3,4].lastIndexOf(3));
+//sort method
+console.log('[8,10,4,9,1,3,5,9,4,10].sort() :>> ', [8,10,4,9,1,3,5,9,4,10].sort((a,b)=>a-b));
 
 console.log(`
 find and findIndex method for searching objects in array
