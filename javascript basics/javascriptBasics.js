@@ -14,6 +14,21 @@ console.log("javascriptBasics START");
 console.log("Hello world");
 
 console.log(`
+statements can be separated by comma or by newline or by semicolon
+let g,l
+l=1,
+g=2;
+console.log('l,g :>> ', l,g),console.log('l,g :>> ', l,g)
+`);
+
+let g,l
+l=1,
+g=2;
+let zeroVar1,zeroVar2=0;
+console.log('l,g :>> ', l,g),console.log('l,g :>> ', l,g)
+console.log('zeroVar1,zeroVar2 :>> ', zeroVar1,zeroVar2);
+
+console.log(`
 can declare variables twice in the same scope using var keyword
 ------------------------------
 var name1="Max";
