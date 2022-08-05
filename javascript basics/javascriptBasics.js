@@ -100,10 +100,16 @@ if('B'>='A'){
     console.log("B>=A");
 }
 
+if('A'>='B'){
+    console.log("A>=B");
+}
+
 //below comparison may not be correct
 if('Z'>='A'+10){
-    console.log("'D'>='A'+2");
+    console.log("'D'>='A'+2",'D'>='A'+2);
+    console.log("'D'>='A'+ 10",'D'>='A'+10);
     console.log("'A'+10 >>",'A'+10);
+    console.log("'D'-'A'",'D'-'A');
 }
 
 if('D'.codePointAt(0)>='A'.codePointAt(0)+2){
@@ -129,20 +135,49 @@ if('B'>='A'){
     console.log("B>=A");
 }
 
+if('A'>='B'){
+    console.log("A>=B");
+}
+
 //below comparison may not be correct
 if('Z'>='A'+10){
-    console.log("'D'>='A'+2");
+    console.log("'D'>='A'+2",'D'>='A'+2);
+    console.log("'D'>='A'+ 10",'D'>='A'+10);
     console.log("'A'+10 >>",'A'+10);
+    console.log("'D'-'A'",'D'-'A');
 }
 
 if('D'.codePointAt(0)>='A'.codePointAt(0)+2){
     console.log("'D'.codePointAt(0)>='A'.codePointAt(0)+2");
     console.log("'A'.codePointAt(0)+2 :>> ", 'A'.codePointAt(0)+2);
+    console.log("String.fromCharCode('A'.codePointAt(0)+2) :>> ",  String.fromCharCode('A'.codePointAt(0)+2));
+    console.log('String.fromCharCode(65,66,67) :>> ', String.fromCharCode(65,66,67));
 }
 console.log('"testString345".substring(0,4) :>> ', "testString345".substring(0,4));
+console.log('"testString345".substring(4,10) :>> ', "testString345".substring(4,10));
 console.log('"testString345".substring(0,0) :>> ', "testString345".substring(0,0));
 console.log('""==="testString345".substring(0,0) :>> ', ""==="testString345".substring(0,0));
 console.log('"testString345".substring(3,2) :>> ', "testString345".substring(3,2));
+
+console.log(`
+comparing characters at index for strings
+--------------------
+let str1="This is test";
+let str2="This is pest";
+console.log('str1[8] :>> ', str1[8]);
+console.log('str2[8] :>> ', str2[8]);
+console.log('str1[8]===str2[8] :>> ', str1[8]===str2[8]);
+console.log('str1[1]===str2[1] :>> ', str1[1]===str2[1]);
+console.log('teststr1.codePointAt(1)===teststr2.codePointAt(1) :>> ', teststr1.codePointAt(1)===teststr2.codePointAt(1));
+`)
+
+let teststr1="This is test";
+let teststr2="This is pest";
+console.log('teststr1[8] :>> ', teststr1[8]);
+console.log('teststr2[8] :>> ', teststr2[8]);
+console.log('teststr1[8]===teststr2[8] :>> ', teststr1[8]===teststr2[8]);
+console.log('teststr1[1]===teststr2[1] :>> ', teststr1[1]===teststr2[1]);
+console.log('teststr1.codePointAt(1)===teststr2.codePointAt(1) :>> ', teststr1.codePointAt(1)===teststr2.codePointAt(1));
 
 var x=50;
 var y=100;
@@ -822,7 +857,7 @@ console.log('age :>> ', age); // 20
 console.log(`
 ES6 Rest Parameters
 -------------------
-The ...nums parameter is called a rest parameter.
+The ...arg parameter preceeded with 3 ellipsis usually present after named method arguments is called a rest parameter.
 It takes all the "extra" arguments passed to the function.
 The three dots (...) are called the Spread operator.
 Only the last parameter of a function may be marked as a rest parameter. 
@@ -1414,6 +1449,28 @@ console.log('index of hello :>> ', myArray.flatMap(
     (x,index)=>{ return x==="Hello" ? index: null;}).filter(x=>x!=null));
 
 console.log(`
+Duplicating array
+-----------------
+let origArr=[5,4,8,9];
+let copyArr=origArr.slice(0);
+let copyArr2=[...origArr];
+copyArr[1]=456;
+copyArr2[1]=657;
+console.log('origArr :>> ', origArr);
+console.log('copyArr :>> ', copyArr);
+console.log('copyArr2 :>> ', copyArr2);
+`);
+
+let origArr=[5,4,8,9];
+let copyArr=origArr.slice(0);
+let copyArr2=[...origArr];
+copyArr[1]=456;
+copyArr2[1]=657;
+console.log('origArr :>> ', origArr);
+console.log('copyArr :>> ', copyArr);
+console.log('copyArr2 :>> ', copyArr2);
+
+console.log(`
 foreach usage:
 --------------
 myArray.forEach((x,index,inputArr)=>
@@ -1621,7 +1678,7 @@ console.log('Object.keys(myObj) :>> ', Object.keys(myObj));
 console.log('myObj["nestedObjName"] :>> ', myObj["nestedObjName"]);
 
 console.log(`
-string primitive type has wrapper "string" object which has length
+string primitive type has wrapper "string" object which has length ( String.length )
 other primitive types like boolean, number, symbol also have wrapper objects
 ------------------------
 `);
