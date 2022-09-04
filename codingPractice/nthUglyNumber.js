@@ -41,3 +41,8 @@ start=new Date();
 console.log(nthUglyNumber(751));
 end=new Date();
 console.log('Time taken (ms) :>> ', Math.abs(end-start)); // 228 ms
+
+//Time taken (ms) for 1000th ugly number :>>  130274
+//Incremental time taken (ms) for 1001th ugly number :>> 2009
+//1000th ugly number: 51200000
+//1001th ugly number: 51840000

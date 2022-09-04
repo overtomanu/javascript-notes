@@ -367,10 +367,14 @@ convert truthy or falsy value to actual boolean value using double bang operator
 resulting in real boolean counterpart value for truthy or falsy values of the data type
 console.log('!!"" :>> ', !!"");
 console.log('!!1 :>> ', !!1);
+console.log('!!null :>> ', !!null);
+console.log('!!undefined :>> ', !!undefined);
 `);
 
 console.log('!!"" :>> ', !!"");
 console.log('!!1 :>> ', !!1);
+console.log('!!null :>> ', !!null);
+console.log('!!undefined :>> ', !!undefined);
 
 //assigning default value to variables using OR condition
 console.log(`
@@ -1105,7 +1109,7 @@ console.log('[3,5,7,1,3,4].indexOf(7) !== -1 :>> ', [3,5,7,1,3,4].indexOf(7) !==
 //lastIndexOf method
 console.log('[3,5,7,1,3,4].lastIndexOf(3) :>> ', [3,5,7,1,3,4].lastIndexOf(3));
 //sort method
-console.log('[8,10,4,9,1,3,5,9,4,10].sort() :>> ', [8,10,4,9,1,3,5,9,4,10].sort((a,b)=>a-b));
+console.log('[8,10,4,9,1,3,5,9,4,10].sort((a,b)=>a-b) :>> ', [8,10,4,9,1,3,5,9,4,10].sort((a,b)=>a-b));
 
 console.log(`
 find and findIndex method for searching objects in array
@@ -1517,6 +1521,8 @@ const taxAdjustedPricesMapped = prices.map((price, idx, prices) => {
 });
   
 console.log('prices, taxAdjustedPricesMapped :>> ', prices, taxAdjustedPricesMapped);
+
+console.log('prices.map(a=>(a*(1+tax))) :>> ', prices.map(a=>(a*(1+tax))));
 
 console.log(`
 sort and reverse method
@@ -2873,6 +2879,7 @@ set.add(5).add(9).add(59).add(9);
 
 console.log('set.has(9) :>> ', set.has(9));
 console.log('set.values() :>> ', set.values());
+console.log('set.keys() :>> ', set.keys());
 set.delete(59);
 //no error if value doesnt exist
 set.delete(60);
@@ -2894,6 +2901,7 @@ set.add(5).add(9).add(59).add(9);
 
 console.log('set.has(9) :>> ', set.has(9));
 console.log('set.values() :>> ', set.values());
+console.log('set.keys() :>> ', set.keys());
 set.delete(59);
 //no error if value doesnt exist
 set.delete(60);
