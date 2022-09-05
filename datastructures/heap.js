@@ -31,6 +31,17 @@ class Heap{
     }
 
     /**
+     * Utility method to insert all priority value pairs to the heap
+     * @param {Array} priorityValuePairArray 
+     */
+    addAll(priorityValuePairArray){
+        for(let i=0;i<priorityValuePairArray.length;i++){
+            const priorityValuePair = priorityValuePairArray[i];
+            this.add(priorityValuePair[0], priorityValuePair[1]);
+        }
+    }
+
+    /**
      * Inserts "Node" object which has priority and value property
      * @param {Node} node 
      */
@@ -93,6 +104,33 @@ class Heap{
         }
         return this.#nodes[0];
     }
+
+    /**
+     * 
+     * @returns array of pairs of priority and values not necessarily in sorted order of priority
+     */
+    getPriorityValuePairs(){
+        let result=[];
+        for(let i=0;i<this.#nodes.length;i++){
+            const curNode=this.#nodes[i];
+            result.push([curNode.priority,curNode.value]);
+        }
+        return result;
+    }
+
+    toString(){
+        let result="[";
+        let i;
+        for(i=0;i<this.#nodes.length-1;i++){
+            result+=this.#nodes[i].toString()+",";
+        }
+        if(this.#nodes.length>0){
+            result+=this.#nodes[i].toString();
+        }
+        result+="]";
+
+        return result;
+    }
 }
 
 class Node{
@@ -103,4 +141,19 @@ class Node{
         this.priority=priority;
         this.value=value;
     }
+
+    toString(){
+        return `Node(${this.priority}, ${this.value})`;
+    }
 }
+
+let heap = new Heap();
+heap.addAll([[6,-1],[7,-1],[-1,-1],[11,-1],[2,-1]]);
+console.log('heap.toString() :>> ', heap.toString());
+console.log('heap.getPriorityValuePairs() :>> ', heap.getPriorityValuePairs());
+console.log("removing and printing minimum priority elements");
+while(heap.size()>0){
+    console.log(heap.remove());
+}
+heap = new Heap();
+console.log('heap.toString() :>> ', heap.toString());
