@@ -69,7 +69,7 @@ class Heap{
         }
         let rootNode=this.#nodes[0];
         let newRoot=this.#nodes.pop();
-        if(rootNode===newRoot){
+        if(this.#nodes.length === 0){
             //no more nodes left
             return rootNode;
         }
@@ -89,7 +89,7 @@ class Heap{
                         ?rightChildIndex
                         :leftChildIndex)
                     : leftChildIndex;
-            if(this.#nodes[index].priority<this.#nodes[smallerPriorityIndex].priority){
+            if(nodeDown.priority<this.#nodes[smallerPriorityIndex].priority){
                 break;
             }
             this.#nodes[index]=this.#nodes[smallerPriorityIndex];
@@ -131,6 +131,24 @@ class Heap{
 
         return result;
     }
+
+    /**
+   * Whether the heap contains the given value.
+   * @param {V} val The value to check for.
+   * @return {boolean} Whether the heap contains the value.
+   */
+  containsValue(val) {
+    return this.#nodes.some((node) => node.value == val);
+  }
+
+  /**
+   * Whether the heap contains the given key.
+   * @param {K} key The key to check for.
+   * @return {boolean} Whether the heap contains the key.
+   */
+  containsPriority(priority) {
+    return this.#nodes.some((node) => node.priority == priority);
+  }
 }
 
 class Node{
@@ -148,9 +166,20 @@ class Node{
 }
 
 let heap = new Heap();
-heap.addAll([[6,-1],[7,-1],[-1,-1],[11,-1],[2,-1]]);
+heap.addAll([[6,6],[7,7],[-1,-1],[-9,-9],[-8,-8],[-7,-7],[11,11],[2,2],[3,3]]);
 console.log('heap.toString() :>> ', heap.toString());
 console.log('heap.getPriorityValuePairs() :>> ', heap.getPriorityValuePairs());
+console.log('heap.containsPriority(6) :>> ', heap.containsPriority(6));
+console.log('heap.containsPriority(99) :>> ', heap.containsPriority(99));
+console.log('heap.containsValue(-2) :>> ', heap.containsValue(-2));
+
+heap.add(10,10);
+console.log('heap.toString() after adding 10 :>> ', heap.toString());
+console.log('heap.remove() :>> ', heap.remove());
+console.log('heap.toString() after remove :>> ', heap.toString());
+heap.add(-10,-10);
+console.log('heap.toString() after adding -10 :>> ', heap.toString());
+
 console.log("removing and printing minimum priority elements");
 while(heap.size()>0){
     console.log(heap.remove());
