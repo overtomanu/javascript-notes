@@ -52,6 +52,7 @@ npm install
 #npm packages
 #-------------
 npm install -g serve
+npm install -g moment
 
 #go project directory and type command "serve" to start serving index.html file
 

@@ -1949,6 +1949,10 @@ console.log('Math.E :>> ', Math.E);
 console.log('Math.abs(-9) :>> ', Math.abs(-9));
 console.log('Math.abs(-8.5) :>> ', Math.abs(-8.5));
 
+// getting integer after division
+console.log('251/100 :>> ', 251/100);
+console.log('Math.floor(251/100) :>> ', Math.floor(251/100));
+
 console.log(`
 get random number between given min and max
 -------------------------------------------
@@ -1996,17 +2000,37 @@ console.log('current date d :>> ', d);
 //new Date(dateString)
 //new Date(year, month, day, hours, minutes, seconds, milliseconds)
 
-//Fri Jan 02 1970 00:00:00
+// Fri Jan 02 1970 00:00:00
 var d1 = new Date(86400000);
 console.log('new Date(86400000) d1 :>> ', d1);
 
-//Fri Jan 02 2015 10:42:00
+// Fri Jan 02 2015 10:42:00
+// initializes date in current locale
 var d2 = new Date("January 2, 2015 10:42:00");
 console.log('d2 = Date("January 2, 2015 10:42:00") :>> ', d2);
 
 //Sat Jun 11 2022 11:42:00
 var d3 = new Date(2022,5,11,11,42,0,0);
+// note: month is zero based, with january being zero
 console.log('d3 = Date(2022,5,11,11,42,0,0):>> ', d3);
+
+// OS/node/browser independent way of obtaining the default locale
+console.log("current locale - Intl.DateTimeFormat().resolvedOptions().locale :>> ", 
+            Intl.DateTimeFormat().resolvedOptions().locale);
+console.log("current timezone - Intl.DateTimeFormat().resolvedOptions().timeZone :>> ",
+            Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+// Initializing in UTC timezone
+const utcDate1 = new Date(Date.UTC(96, 0, 6, 3, 4, 5));
+const utcDate2 = new Date(Date.UTC(0, 0, 0, 0, 0, 0));
+
+console.log("utcDate1.toUTCString() :>> ",utcDate1.toUTCString());
+// expected output: "Fri, 02 Feb 1996 03:04:05 GMT"
+
+console.log("utcDate2.toUTCString() :>> ", utcDate2.toUTCString());
+// expected output: "Sun, 31 Dec 1899 00:00:00 GMT"
+
+// cannot initialize date literal with other timezone, we can only print date as per other timezone
 
 console.log('d3.getHours() :>> ', d3.getHours());
 console.log('d3.getMinutes() :>> ', d3.getMinutes());
@@ -2015,6 +2039,19 @@ console.log('d3.getDate() :>> ', d3.getDate());
 console.log('d3.getFullYear() :>> ', d3.getFullYear());
 console.log('d3.getDay() :>> ', d3.getDay());
 console.log('d3.getMilliseconds() :>> ', d3.getMilliseconds());
+console.log('d3.toDateString() :>> ', d3.toDateString());
+console.log('d3.toISOString() :>> ', d3.toISOString());
+console.log('d3.toLocaleString() :>> ', d3.toLocaleString());
+console.log('d3.toUTCString() :>> ', d3.toUTCString());
+console.log('d3.toJSON() :>> ', d3.toJSON());
+console.log('d3.getTimezoneOffset() :>> ', d3.getTimezoneOffset());
+console.log('d3.toLocaleString("default", { year: "numeric",month: "2-digit",day: "2-digit"}); :>> ', 
+d3.toLocaleString("default", {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit"
+                            }));
+// Also refer dateAdditionUsingMoment.js file
 
 //variable scopes
 //you can access global variables inside a function
