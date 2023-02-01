@@ -208,6 +208,10 @@ console.log('0.2+0.4 === 0.6 :>> ', 0.2+0.4 === 0.6);;  // false
 console.log('20.2 :>> ', 20.2);
 console.log('20.2.toFixed(20) :>> ', 20.2.toFixed(20)); //show unrounded value from binary system
 console.log('(0.2+0.4).toFixed(2) === 0.6.toFixed(2) :>> ', (0.2+0.4).toFixed(2) === 0.6.toFixed(2));
+// rounding off to integer - 0.5 and above are rounded to 1
+console.log('0.6.toFixed(0) :>> ', 0.6.toFixed(0));
+console.log('0.5.toFixed(0) :>> ', 0.5.toFixed(0));
+console.log('0.4.toFixed(0) :>> ', 0.4.toFixed(0));
 console.log('Number.MAX_VALUE :>> ', Number.MAX_VALUE);
 console.log('Number.MAX_SAFE_INTEGER :>> ', Number.MAX_SAFE_INTEGER);
 //using bigint to represent very large number
@@ -226,6 +230,10 @@ console.log('0.2+0.4 === 0.6 :>> ', 0.2+0.4 === 0.6);;  // false
 console.log('20.2 :>> ', 20.2);
 console.log('20.2.toFixed(20) :>> ', 20.2.toFixed(20)); //show unrounded value from binary system
 console.log('(0.2+0.4).toFixed(2) === 0.6.toFixed(2) :>> ', (0.2+0.4).toFixed(2) === 0.6.toFixed(2));
+// rounding off to integer - 0.5 and above are rounded to 1
+console.log('0.6.toFixed(0) :>> ', 0.6.toFixed(0));
+console.log('0.5.toFixed(0) :>> ', 0.5.toFixed(0));
+console.log('0.4.toFixed(0) :>> ', 0.4.toFixed(0));
 console.log('Number.MAX_VALUE :>> ', Number.MAX_VALUE);
 console.log('Number.MAX_SAFE_INTEGER :>> ', Number.MAX_SAFE_INTEGER);
 //using bigint to represent very large number
@@ -290,14 +298,27 @@ Operator	Name                    Description
 
 //converting decimal to its binary representation string
 console.log('(-5 >>> 0).toString(2) :>> ', (-5 >>> 0).toString(2));
+console.log('(-5).toString(2) :>> ', (-5).toString(2));
+console.log('(-5).toString() :>> ', (-5).toString());
+console.log('-5 >>> 0 :>> ', -5 >>> 0);
 console.log('parseInt(101, 2).toString(10) :>> ', parseInt(101, 2).toString(10));
+
+let negNum=-5;
+negNum=negNum>>>0;
+console.log('negNum :>> ', negNum);
 
 `);
 
 //converting decimal to its binary representation string
 console.log('(-5 >>> 0).toString(2) :>> ', (-5 >>> 0).toString(2));
 console.log('(-5).toString(2) :>> ', (-5).toString(2));
+console.log('(-5).toString() :>> ', (-5).toString());
+console.log('-5 >>> 0 :>> ', -5 >>> 0);
 console.log('parseInt(101, 2).toString(10) :>> ', parseInt(101, 2).toString(10));
+
+let negNum=-5;
+negNum=negNum>>>0;
+console.log('negNum :>> ', negNum);
 
 console.log('5 & 1 :>> ', 5 & 1);
 console.log('5 | 1 :>> ', 5 | 1);
@@ -308,9 +329,10 @@ console.log('~5 => ', ~5);
 console.log('5 << 1 => ', 5 << 1);
 //zero filled right shift
 console.log('-5 >>> 1 :>> ', -5 >>> 1);
+console.log('(-5 >>> 1).toString(2) :>> ', (-5 >>> 1).toString(2));
 //signed right shift
 console.log('-5 >> 1 :>> ', -5 >> 1);
-
+console.log('(-5 >> 1).toString(2) :>> ', (-5 >> 1).toString(2));
 
 console.log(`
 different number literals in javascript
@@ -1951,6 +1973,7 @@ console.log('Math.abs(-8.5) :>> ', Math.abs(-8.5));
 
 // getting integer after division
 console.log('251/100 :>> ', 251/100);
+console.log('1/2 :>> ', 1/2);
 console.log('Math.floor(251/100) :>> ', Math.floor(251/100));
 
 console.log(`
