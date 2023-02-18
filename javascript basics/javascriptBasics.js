@@ -1123,6 +1123,8 @@ console.log('arr37 :>> ', arr37);
 console.log('arr37.length :>> ', arr37.length);
 console.log('arr38 :>> ', arr38);
 console.log('arr38.length :>> ', arr38.length);
+console.log('arr38.reverse().join("") :>> ', arr38.reverse().join(""));
+console.log('arr38.reverse().join(",") :>> ', arr38.reverse().join(","));
 console.log('arr39 :>> ', arr39);
 console.log('[3,5,7,1,3,4].indexOf(1) :>> ', [3,5,7,1,3,4].indexOf(1));
 console.log('[3,5,7,1,3,4].indexOf(1.5) :>> ', [3,5,7,1,3,4].indexOf(1.5));
@@ -1260,6 +1262,9 @@ let rows=6,cols=5;
 let myGrid = [...Array(rows)].map(()=>Array(cols).fill(defValue));
 
 console.log('myGrid :>> ', myGrid);
+console.log('myGrid.join(" ") :>> ', myGrid.join(" "));
+let initialValue="begin"
+console.log('myGrid.reduce(x=>x.join(" ")) :>> ', myGrid.reduce((accumulator,x)=>{ return accumulator+" "+x.join(" ") },initialValue ));
 
 console.log(`
 using array as stack
