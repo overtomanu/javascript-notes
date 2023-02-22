@@ -1975,6 +1975,8 @@ console.log('Math.random() :>> ', Math.random());
 console.log('Math.E :>> ', Math.E);
 console.log('Math.abs(-9) :>> ', Math.abs(-9));
 console.log('Math.abs(-8.5) :>> ', Math.abs(-8.5));
+console.log('Math.pow(2,31) :>> ', Math.pow(2,31));
+console.log('2^31 (note this is not power, but bitwise operator):>> ', 2^31);
 
 // getting integer after division
 console.log('251/100 :>> ', 251/100);
@@ -2881,6 +2883,7 @@ Map supports different data types i.e. 1 and "1" are two different keys/values.
 
 let map = new Map([['k1', 'v1'], ['k2', 'v2']]);
 console.log('map.size :>> ', map.size); // 2
+console.log('map.get("k3") :>> ', map.get("k3")); // undefined
 let map2 = new Map();
 map2.set('k1', 'v1').set('k2', 'v2');
 console.log("map2.get('k1') :>> ", map2.get('k1')); // v1
@@ -2891,10 +2894,12 @@ for (let kv of map2.entries())
 
 let map = new Map([['k1', 'v1'], ['k2', 'v2']]);
 console.log('map.size :>> ', map.size); // 2
+console.log('map.get("k3") :>> ', map.get("k3")); // undefined
 let map2 = new Map();
 map2.set('k1', 'v1').set('k2', 'v2');
 console.log("map2.get('k1') :>> ", map2.get('k1')); // v1
 console.log("map2.has('k2') :>> ", map2.has('k2')); // true
+console.log('map2.entries() :>> ', map2.entries());
 for (let kv of map2.entries())
     console.log('kv[0] + " : " + kv[1] :>> ', kv[0] + " : " + kv[1]);
 
