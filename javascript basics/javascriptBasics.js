@@ -1282,41 +1282,6 @@ while((stackElem=stack.pop())!==undefined){
 
 console.log("\n------------------");
 
-//implicit arg "arguments" inside javascript function
-//arguments is an object which contains all args passed to the function
-function sum(){
-    var sum=0;
-    console.log('function arguments are :>> ', arguments);
-    for(var i=0;i<arguments.length;i++){
-        sum+=arguments[i];
-    }
-    return sum;
-}
-console.log('sum(1,2,3,4,5) :>> ', sum(1,2,3,4,5));
-
-console.log(`
-defaulting value for parameters in function
-Default value expressions are evaluated at function call time from left to right. 
-This also means that default expressions can use the values of previously-filled parameters.
------------
-function test(a, b = 3, c = 42) {
-  return a + b + c;
-}
-console.log(test(5));
-`);
-function test(a, b = 3, c = 42) {
-    return a + b + c;
-}
-console.log(test(5));
-
-console.log(`
-ES6 equivalent
-const test2 = (a, b = 3, c = b+42) => a + b + c;
-console.log(test2(8));
-`);
-const test2 = (a, b = 3, c = b+42) => a + b + c;
-console.log(test2(8));
-
 //array splice method
 console.log(`
 array splice method
@@ -1809,16 +1774,14 @@ function productDescription(strings, productName, productPrice) {
 `);
 
 function productDescription(strings, productName, productPrice) {
-  console.log(strings);
-  console.log(productName);
-  console.log(productPrice);
+  console.log('productDescription: strings :>> ', strings);
+  console.log('productDescription: productName :>> ', productName);
+  console.log('productDescription: productPrice :>> ', productPrice);
   let priceCategory = 'pretty cheap regarding its price';
   if (productPrice > 20) {
     priceCategory = 'fairly priced';
   }
-  return `${strings[0]}${productName}${strings[1]}${priceCategory}${
-    strings[2]
-  }`;
+  return `${strings[0]}${productName}${strings[1]}${priceCategory}${strings[2]}`;
 }
 
 const prodName = 'JavaScript Course';
@@ -1891,6 +1854,57 @@ person2.isFromState = function (state) {
 console.log('person2.isFromState("Karnataka") :>> ', person2.isFromState("Karnataka"));
 console.log('person2.isFromState("Maharashtra") :>> ', person2.isFromState("Maharashtra"));
 
+//implicit arg "arguments" inside javascript function
+//arguments is an object which contains all args passed to the function
+function sum(){
+    var sum=0;
+    console.log('inside sum function :>> function arguments are :>> ', arguments);
+    for(var i=0;i<arguments.length;i++){
+        sum+=arguments[i];
+    }
+    return sum;
+}
+console.log('sum(1,2,3,4,5) :>> ', sum(1,2,3,4,5));
+
+console.log(`
+defaulting value for parameters in function
+Default value expressions are evaluated at function call time from left to right. 
+This also means that default expressions can use the values of previously-filled parameters.
+-----------
+function test(a, b = 3, c = 42) {
+  return a + b + c;
+}
+console.log('test(5) :>> ', test(5));
+`);
+function test(a, b = 3, c = 42) {
+    return a + b + c;
+}
+console.log('test(5) :>> ', test(5));
+
+console.log(`
+ES6 equivalent
+const test2 = (a, b = 3, c = b+42) => a + b + c;
+console.log('test2(8) :>> ', test2(8));
+`);
+const test2 = (a, b = 3, c = b+42) => a + b + c;
+console.log('test2(8) :>> ', test2(8));
+
+function test4(a, b, c) {
+    return a + b + c;
+}
+const fn3 = (a = 1, b, c) => a + b + c;
+// returns number of params till first param with default value
+// reference: https://www.linkedin.com/pulse/function-currying-default-params-javascript-vladim%C3%ADr-gorej/
+console.log('test2.length :>> ', test2.length);
+console.log('test4.length :>> ', test4.length);
+console.log('fn3.length :>> ', fn3.length);
+console.log('fn3.name :>> ', fn3.name);
+
+// create new function with values for certain parameter set for existing function
+// if setting some fixed number of initial parameters, then we can also use function.bind method to get new function
+testFunction3 = (a,c)=>{return test2(a,10,c)};
+console.log('testFunction3(8,9) :>> ', testFunction3(8,9));
+
 console.log(`
 apply and call method of function
 ------------------------
@@ -1911,6 +1925,7 @@ var args = [1, 2, 3];
 myFunction.apply(null, args.concat(4));
 myFunction.call(null,8,7,5,9);
 
+// create new function by setting certain params of existing function using "bind"
 console.log(`
 function bindFun1(messagePrefix,result) {
     //console.log('messagePrefix,result :>> ', messagePrefix,result);
@@ -1959,6 +1974,50 @@ function performMathOperation(messagePrintingFunction,operation,initialNumber,..
 console.log('performMathOperation(bindFun1.bind("The sum is "),"SUM",4,5,9,11) :>> ', performMathOperation(bindFun1.bind(this,"The sum is"),"SUM",100,5,9,11));
 
 console.log('performMathOperation(bindFun1.bind(this,"The subtraction is"),"SUBTRACT",100,10,11,12) :>> ', performMathOperation(bindFun1.bind(this,"The subtraction is"),"SUBTRACT",100,10,11,12));
+
+// Currying functions
+
+// simple curry
+
+function simpleCurry(f) { // curry(f) does the currying transform
+    return function (a) {
+        return function (b) {
+            return f(a, b);
+        };
+    };
+}
+
+let curriedSum = simpleCurry(sum);
+
+console.log('curriedSum(9) :>> ', curriedSum(9));
+console.log('curriedSum(7)(8) :>> ', curriedSum(7)(8));
+
+// advanced curry implementation
+function curry(func) {
+
+    return function curried(...args) {
+        if (args.length >= func.length) {
+            return func.apply(this, args);
+        } else {
+            return function (...args2) {
+                return curried.apply(this, args.concat(args2));
+            }
+        }
+    };
+
+}
+
+function sum5Elements(a,b,c,d,e){
+    return a+b+c+d+e;
+}
+
+console.log('curry(sum5Elements)(3)(5) :>> ', curry(sum5Elements)(3)(5));
+console.log('curry(sum5Elements)(3)(5) :>> ', curry(sum5Elements)(3)(5)(7)(3)(3));
+
+// WARNING : currying doesn't work with functions having default values for parameters
+// alternative is to use named parameters or partial application (upcoming proposal in tc39)
+// https://2ality.com/2017/11/currying-in-js.html
+// https://exploringjs.com/es6/ch_parameter-handling.html#sec_named-parameters
 
 //Math functions
 console.log(`
@@ -2502,6 +2561,23 @@ console.log('rect2.RectangleName :>> ', rect2.RectangleName);
 //can't update value of property which has writable set to false
 rect2.RectangleName="Rectangle no 5";
 console.log('rect2.RectangleName :>> ', rect2.RectangleName);
+
+// syntax of class with private fields, method and static private fields and methods
+class ClassWithPrivate {
+    #privateField;
+    #privateFieldWithInitializer = 42;
+  
+    #privateMethod() {
+      // …
+    }
+  
+    static #privateStaticField;
+    static #privateStaticFieldWithInitializer = 42;
+  
+    static #privateStaticMethod() {
+      // …
+    }
+}
 `);
 
 class Rectangle2 {
@@ -2559,6 +2635,24 @@ console.log('rect2.RectangleName :>> ', rect2.RectangleName);
 //can't update value of property which has writable set to false
 rect2.RectangleName="Rectangle no 5";
 console.log('rect2.RectangleName :>> ', rect2.RectangleName);
+
+// syntax of class with private fields, method and static private fields and methods
+class ClassWithPrivate {
+    #privateField;
+    #privateFieldWithInitializer = 42;
+  
+    #privateMethod() {
+      // …
+    }
+  
+    static #privateStaticField;
+    static #privateStaticFieldWithInitializer = 42;
+  
+    static #privateStaticMethod() {
+      // …
+    }
+}
+  
 
 console.log(`
 static class methods in ES6
@@ -2890,6 +2984,8 @@ console.log("map2.get('k1') :>> ", map2.get('k1')); // v1
 console.log("map2.has('k2') :>> ", map2.has('k2')); // true
 for (let kv of map2.entries())
     console.log('kv[0] + " : " + kv[1] :>> ', kv[0] + " : " + kv[1]);
+console.log('map2.delete("k1") :>> ', map2.delete("k1"));
+console.log('map2 :>> ', map2);
 `);
 
 let map = new Map([['k1', 'v1'], ['k2', 'v2']]);
@@ -2902,6 +2998,8 @@ console.log("map2.has('k2') :>> ", map2.has('k2')); // true
 console.log('map2.entries() :>> ', map2.entries());
 for (let kv of map2.entries())
     console.log('kv[0] + " : " + kv[1] :>> ', kv[0] + " : " + kv[1]);
+console.log('map2.delete("k1") :>> ', map2.delete("k1"));
+console.log('map2 :>> ', map2);
 
 console.log(`
 Other useful methods in map
