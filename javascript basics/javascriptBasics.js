@@ -1266,6 +1266,8 @@ console.log('myGrid.join(" ") :>> ', myGrid.join(" "));
 let initialValue="begin"
 console.log('myGrid.reduce(x=>x.join(" ")) :>> ', myGrid.reduce((accumulator,x)=>{ return accumulator+" "+x.join(" ") },initialValue ));
 
+console.log('Array.from(Array(11).keys()) :>> ', Array.from(Array(11).keys()));
+
 console.log(`
 using array as stack
 --------------------
