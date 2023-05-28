@@ -113,7 +113,7 @@ Numbers in javascript
 every number in javascript is a floating point number. It doesn't have separate special type 
 for integers.
 javascript internally stores number in binary ( base 2 ) format. so some fractions/decimals cannot be represented perfectly.
-console.log(02.+0.4);  // 0.6000000000000001
+console.log(0.2+0.4);  // 0.6000000000000001
 console.log(0.2+0.4 === 0.6);  // false
 
 Bitwise operators in javascript

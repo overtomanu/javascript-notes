@@ -4366,7 +4366,7 @@ let myObj348 = {
     return x * y;
   },
   squared(x) {
-    return x ** x;
+    return x ** x; // note: "**"" is exponentiation operator
   }
 };
 
